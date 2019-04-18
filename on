@@ -1,0 +1,20 @@
+#!/usr/bin/node
+const fs = require('fs')
+const sun = require('sun-time')
+
+const today = new Date()
+const tomorrow = new Date(today.setDate(today.getDate() + 1))
+
+const [hour, minute] = sun([38.905258, -76.984544], tomorrow, { tz: -5 }).set.split(':')
+
+const cronjob = `# Turn the lights on and schedule tomorrow's cron
+${minute} ${hour}  *   *   *     root /home/pi/lights_control/on
+`
+
+fs.writeFileSync('/etc/cron.d/lights_on', cronjob, 'utf8')
+
+const Gpio = require('onoff').Gpio;
+const LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output
+
+LED.writeSync(1);
+console.log('on!')

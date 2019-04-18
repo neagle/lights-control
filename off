@@ -1,0 +1,5 @@
+#!/usr/bin/node
+var Gpio = require('onoff').Gpio;
+var LED = new Gpio(4, 'out'); //use GPIO pin 4, and specify that it is output
+
+LED.writeSync(0);

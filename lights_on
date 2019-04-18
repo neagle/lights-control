@@ -1,0 +1,3 @@
+
+# m   h  dom mon dow   command
+55 17  *   *   *     root /home/pi/lights_control/on

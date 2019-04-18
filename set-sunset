@@ -1,0 +1,17 @@
+#!/usr/bin/node
+const fs = require('fs')
+const sun = require('sun-time')
+
+const today = new Date()
+const tomorrow = new Date(today.setDate(today.getDate() + 1))
+
+const [hour, minute] = sun([38.905258, -76.984544], tomorrow, { tz: -4 }).set.split(':')
+//console.log(sunTime)
+
+const cronjob = `
+# m   h  dom mon dow   command
+${minute} ${hour}  *   *   *     root /home/pi/lights_control/on
+`
+
+fs.writeFileSync('lights_on', cronjob, 'utf8')
+
